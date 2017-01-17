@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/static/js/1.js"></script>
+    <script src="/static/js/jquery-1.9.1.js"></script>
+    <!--[if lt IE 9]>
+         <script src="/static/js/html5shiv.js"></script>
+         <script src="/static/js/respond.min.js"></script>
+      <![endif]-->
+    <title>Title</title>
+    <script>
+        $(document).ready(function(){
+            $("#mybtn").click(function(){
+                var name = $("#name").val();
+                var password = $("#password").val();
+                $.post("/login",{"name":name,"password":password},function(data){
+                    switch(data.loginstatus){
+                        case "200":
+                            window.location.href="/index";break;
+                        case "300":
+                            alert("此用户已经被锁定,请联系管理员!");break;
+                        case "500":
+                            alert("用户信息输入不正确");break;
+                        case "600":
+                            alert("用户名不存在");break;
+                        case "700":
+                            alert("用户名也密码不匹配");break;
+                    }
+                },"json")
+            })
+        })
+
+    </script>
+
+
+</head>
+<body>
+
+<form>
+<div>
+    <div>
+        <input type="text" id="name" class="form-control " placeholder="Username" required="required"/>
+    </div>
+</div>
+<div>
+    <div>
+        <input type="password" id="password" class="form-control " placeholder="Email Id" required="required"/>
+    </div>
+</div>
+<div>
+    <button type="button" id="mybtn">登陆 &nbsp;&nbsp; </button>
+</div>
+</form>
+
+</body>
+</html>
